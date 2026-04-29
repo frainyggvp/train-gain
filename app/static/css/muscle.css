@@ -1,0 +1,29 @@
+.muscle-filter-card {
+    max-width: 1000px;
+    margin: 0 auto 24px;
+}
+
+.muscle-filter-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.muscle-filter-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.muscle-filter-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.workout-meta {
+    color: #f1f1f1;
+    font-size: 14px;
+    margin: 0 0 14px;
+    font-weight: 600;
+}

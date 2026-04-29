@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+<h2 class="section-title">Админ-панель</h2>
+<div class="admin-grid">
+
+    <div class="admin-block">
+        <h3>Добавить тренировку</h3>
+        <form method="POST" action="{{ url_for('admin.add_workout') }}">
+            <input name="title" placeholder="Название тренировки" required>
+
+            <select name="muscle_group_id" required>
+                {% for m in muscles %}
+                    <option value="{{ m.id }}">{{ m.name }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="difficulty" required>
+                <option value="easy">Лёгкая</option>
+                <option value="medium">Средняя</option>
+                <option value="hard">Тяжёлая</option>
+            </select>
+
+            <select name="location" required>
+                <option value="home">Дома</option>
+                <option value="gym">В зале</option>
+            </select>
+
+            <input name="preview" placeholder="Ссылка на изображение">
+
+            <button type="submit" class="btn btn-primary">Добавить тренировку</button>
+        </form>
+
+        
+        <h3>Добавить упражнение</h3>
+            <form method="POST" enctype="multipart/form-data">
+                <input name="exercise_name" placeholder="Название упражнения" required>
+                <textarea name="exercise_desc" placeholder="Описание" required></textarea>
+
+                <label>Видео упражнения (mp4)</label>
+                <input type="file" name="exercise_video_file" accept="video/mp4">
+
+                <input name="reps_beginner" placeholder="Повторения для новичков, например: 8-10">
+                <input name="reps_intermediate" placeholder="Повторения для любителей, например: 12-15">
+                <input name="reps_advanced" placeholder="Повторения для опытных, например: 15-20">
+
+                <select name="workout_id" required>
+                    {% for w in workouts %}
+                        <option value="{{ w.id }}">{{ w.title }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" name="add_exercise" class="btn btn-primary">Добавить упражнение</button>
+            </form>
+    </div>
+
+    <div class="admin-block">
+        <h3>Тренировки</h3>
+
+        <form method="GET" class="admin-filter-form">
+            <select name="muscle_group_id">
+                <option value="">Все группы мышц</option>
+                {% for m in muscles %}
+                    <option value="{{ m.id }}" {% if selected_muscle_id == (m.id|string) %}selected{% endif %}>
+                        {{ m.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="difficulty">
+                <option value="">Любая сложность</option>
+                <option value="easy" {% if selected_difficulty == "easy" %}selected{% endif %}>Лёгкая</option>
+                <option value="medium" {% if selected_difficulty == "medium" %}selected{% endif %}>Средняя</option>
+                <option value="hard" {% if selected_difficulty == "hard" %}selected{% endif %}>Тяжёлая</option>
+            </select>
+
+            <select name="location">
+                <option value="">Любой формат</option>
+                <option value="home" {% if selected_location == "home" %}selected{% endif %}>Дома</option>
+                <option value="gym" {% if selected_location == "gym" %}selected{% endif %}>В зале</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
+            <a href="{{ url_for('admin.admin_index') }}" class="btn btn-secondary">Сбросить</a>
+        </form>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Группа</th>
+                <th>Сложность</th>
+                <th>Формат</th>
+                <th>Действия</th>
+            </tr>
+
+            {% for w in workouts %}
+            <tr>
+                <td>{{ w.id }}</td>
+                <td>{{ w.title }}</td>
+                <td>{{ w.muscle_group.name }}</td>
+                <td>
+                    {% if w.difficulty == "easy" %}Лёгкая
+                    {% elif w.difficulty == "medium" %}Средняя
+                    {% else %}Тяжёлая
+                    {% endif %}
+                </td>
+                <td>
+                    {% if w.location == "home" %}Дома
+                    {% else %}В зале
+                    {% endif %}
+                </td>
+                <td class="actions-cell">
+                    <a href="{{ url_for('admin.edit_workout', id=w.id) }}">✏️</a>
+
+                    <form method="POST"
+                          action="{{ url_for('admin.delete_workout', id=w.id) }}"
+                          onsubmit="return confirm('Удалить тренировку?');">
+                        <button type="submit">❌</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Упражнения</h3>
+
+        <form method="GET" class="admin-filter-form">
+            <select name="exercise_sort">
+                <option value="id" {% if exercise_sort == "id" %}selected{% endif %}>Сортировка по ID</option>
+                <option value="name" {% if exercise_sort == "name" %}selected{% endif %}>Сортировка по названию</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Применить</button>
+            <a href="{{ url_for('admin.admin_index') }}" class="btn btn-secondary">Сбросить</a>
+        </form>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Тренировка</th>
+                <th>Действия</th>
+            </tr>
+
+            {% for e in exercises %}
+            <tr>
+                <td>{{ e.id }}</td>
+                <td>{{ e.name }}</td>
+                <td>{{ e.workout.title if e.workout else "-" }}</td>
+                <td class="actions-cell">
+                    <a href="{{ url_for('admin.edit_exercise', id=e.id) }}">✏️</a>
+
+                    <form method="POST"
+                          action="{{ url_for('admin.delete_exercise', id=e.id) }}"
+                          onsubmit="return confirm('Удалить упражнение?');">
+                        <button type="submit">❌</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+<section class="hero-map hero-map-refined">
+    <div class="hero-map-header">
+        <h2 class="section-title">Выберите группу мышц</h2>
+        <p class="hero-map-subtitle">
+            Нажмите на выделенную мышцу, чтобы открыть тренировки для этой группы.
+        </p>
+    </div>
+
+    <div class="photo-map-grid">
+
+        <!-- FRONT -->
+        <div class="photo-map-card">
+            <div class="photo-map-title">Перед</div>
+
+            <div class="body-photo-map svg-photo-map">
+                <img src="{{ url_for('static', filename='img/body_front.png') }}" alt="Передняя часть тела">
+
+               <svg class="body-overlay" viewBox="0 0 991 1600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+
+    <!-- ПЛЕЧИ -->
+    <path class="click-muscle"
+          data-id="10" data-name="Плечи"
+          d="M328,340
+             C296,356 278,392 281,435
+             C305,447 339,446 367,430
+             C378,399 373,363 353,339
+             Z" />
+    <path class="click-muscle"
+          data-id="10" data-name="Плечи"
+          d="M624,340
+             C661,356 679,392 676,435
+             C652,447 618,446 590,430
+             C579,399 584,363 604,339
+             Z" />
+
+    <!-- ГРУДЬ -->
+    <path class="click-muscle"
+          data-id="2" data-name="Грудь"
+          d="M340,390
+             C370,360 435,356 486,366
+             C497,382 499,447 492,495
+             C462,518 397,520 348,505
+             C334,470 332,423 340,390
+             Z" />
+    <path class="click-muscle"
+          data-id="2" data-name="Грудь"
+          d="M651,390
+             C621,360 556,356 505,366
+             C494,382 492,447 499,495
+             C529,518 594,520 643,505
+             C657,470 659,423 651,390
+             Z" />
+
+    <!-- БИЦЕПС ЛЕВЫЙ -->
+    <path class="click-muscle muscle-soft"
+          data-id="11" data-name="Бицепс"
+          d="M272,470
+             C252,496 247,550 257,603
+             C270,618 287,620 301,610
+             C312,574 311,525 300,482
+             Z" />
+
+    <!-- БИЦЕПС ПРАВЫЙ -->
+    <path class="click-muscle muscle-soft"
+          data-id="11" data-name="Бицепс"
+          d="M686,470
+             C706,496 711,550 701,603
+             C688,618 671,620 657,610
+             C646,574 647,525 658,482
+             Z" />
+
+    <!-- ПРЕДПЛЕЧЬЕ ЛЕВОЕ -->
+    <path class="click-muscle muscle-soft"
+          data-id="4" data-name="Предплечья"
+          d="M252,626
+             C236,676 236,758 247,845
+             L280,845
+             C286,765 283,690 272,634
+             Z" />
+
+    <!-- ПРЕДПЛЕЧЬЕ ПРАВОЕ -->
+    <path class="click-muscle muscle-soft"
+      data-id="4" data-name="Предплечья"
+      d="M702,626
+         C718,676 718,758 707,845
+         L674,845
+         C668,765 671,690 682,634
+         Z" />
+
+
+    <!-- ПРЕСС -->
+    <path class="click-muscle muscle-soft"
+          data-id="5" data-name="Пресс"
+          d="M425,520
+             C445,495 545,495 565,520
+             C578,555 575,620 556,668
+             C534,695 456,695 434,668
+             C415,620 412,555 425,520
+             Z" />
+
+    <!-- БЕДРО ЛЕВОЕ -->
+    <path class="click-muscle muscle-soft"
+          data-id="8" data-name="Бедра"
+          d="M356,922
+             C390,916 424,916 448,926
+             C450,990 445,1062 432,1136
+             C419,1167 403,1188 383,1188
+             C366,1158 358,1084 355,1006
+             C354,970 354,944 356,922
+             Z" />
+
+    <!-- БЕДРО ПРАВОЕ -->
+    <path class="click-muscle muscle-soft"
+          data-id="8" data-name="Бедра"
+          d="M606,922
+             C572,916 538,916 514,926
+             C512,990 517,1062 530,1136
+             C543,1167 559,1188 579,1188
+             C596,1158 604,1084 607,1006
+             C608,970 608,944 606,922
+             Z" />
+
+    <!-- ИКРА ЛЕВАЯ -->
+    <path class="click-muscle muscle-soft"
+          data-id="9" data-name="Икры"
+          d="M374,1194
+             C393,1192 408,1198 416,1212
+             C418,1282 417,1356 411,1438
+             C402,1456 390,1462 377,1454
+             C372,1376 371,1298 374,1194
+             Z" />
+
+    <!-- ИКРА ПРАВАЯ -->
+    <path class="click-muscle muscle-soft"
+          data-id="9" data-name="Икры"
+          d="M576,1194
+             C557,1192 542,1198 534,1212
+             C532,1282 533,1356 539,1438
+             C548,1456 560,1462 573,1454
+             C578,1376 579,1298 576,1194
+             Z" />
+</svg>
+            </div>
+        </div>
+
+        <!-- BACK -->
+        <div class="photo-map-card">
+            <div class="photo-map-title">Зад</div>
+
+            <div class="body-photo-map svg-photo-map">
+                <img src="{{ url_for('static', filename='img/body_back.png') }}" alt="Задняя часть тела">
+
+                <svg class="body-overlay" viewBox="0 0 991 1600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <!-- ШЕЯ -->
+                    <path class="click-muscle"
+                          data-id="1" data-name="Шея"
+                          d="M414,280 C434,260 488,260 508,280 C506,316 488,338 461,341 C434,338 416,316 414,280 Z" />
+
+                    <!-- ПЛЕЧИ -->
+                    <path class="click-muscle"
+                          data-id="10" data-name="Плечи"
+                          d="M322,325 C286,340 265,373 268,412 C293,432 328,431 359,412 C370,380 365,344 344,324 Z" />
+                    <path class="click-muscle"
+                          data-id="10" data-name="Плечи"
+                          d="M589,325 C625,340 646,373 643,412 C618,432 583,431 552,412 C521,380 546,344 567,324 Z" />
+
+                    <!-- СПИНА -->
+                    <path class="click-muscle"
+                          data-id="6" data-name="Спина"
+                          d="M360,316
+                             C380,302 525,302 555,316
+                             C565,370 564,450 552,545
+                             C542,580 526,610 513,645
+                             L513,685
+                             L397,685
+                             L397,645
+                             C384,610 368,580 358,545
+                             C346,450 345,370 355,316
+                             Z" />
+
+                    <!-- ТРИЦЕПС -->
+                    <path class="click-muscle muscle-soft"
+                          data-id="3" data-name="Трицепс"
+                          d="M257,470 C233,498 226,549 237,598 C254,624 278,628 297,613 C309,575 307,529 289,482 C278,471 269,467 257,470 Z" />
+                    <path class="click-muscle muscle-soft"
+                          data-id="3" data-name="Трицепс"
+                          d="M654,470 C678,498 685,549 674,598 C657,624 633,628 614,613 C602,575 604,529 622,482 C633,471 642,467 654,470 Z" />
+
+                    <!-- ПРЕДПЛЕЧЬЯ -->
+                    <path class="click-muscle muscle-soft"
+                          data-id="4" data-name="Предплечья"
+                          d="M236,622 C217,676 215,762 229,849 C241,871 255,873 269,860 C274,783 270,711 257,641 Z" />
+                    <path class="click-muscle muscle-soft"
+                          data-id="4" data-name="Предплечья"
+                          d="M675,622 C694,676 696,762 682,849 C670,871 656,873 642,860 C637,783 641,711 654,641 Z" />
+
+
+                    <!-- ЯГОДИЦЫ -->
+                    <path class="click-muscle muscle-soft"
+                          data-id="7" data-name="Ягодицы"
+                          d="M338,778 C362,760 399,762 414,788 C416,826 405,852 380,864 C354,852 337,826 338,778 Z" />
+                    <path class="click-muscle muscle-soft"
+                          data-id="7" data-name="Ягодицы"
+                          d="M486,788 C501,762 538,760 562,778 C563,826 546,852 520,864 C495,852 484,826 486,788 Z" />
+
+                    <!-- БЁДРА -->
+                    <path class="click-muscle muscle-soft"
+                          data-id="8" data-name="Бедра"
+                          d="M353,960 C330,1015 321,1100 326,1203 C337,1241 353,1255 371,1248 C382,1149 384,1075 380,972 Z" />
+
+                    <path class="click-muscle muscle-soft"
+                          data-id="8" data-name="Бедра"
+                          d="M533,960 C556,1015 565,1100 560,1203 C549,1241 533,1255 515,1248 C504,1149 502,1075 506,972 Z" />
+
+                    <!-- ИКРЫ -->
+                    <path class="click-muscle muscle-soft"
+                          data-id="9" data-name="Икры"
+                          d="M345,1225 C326,1280 328,1364 347,1438 C359,1450 372,1450 383,1436 C388,1362 384,1298 368,1242 Z" />
+
+                    <path class="click-muscle muscle-soft"
+                          data-id="9" data-name="Икры"
+                          d="M538,1225 C557,1280 555,1364 536,1438 C524,1450 511,1450 500,1436 C495,1362 499,1298 515,1242 Z" />
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="tooltip"></div>
+</section>
+
+{% endblock %}

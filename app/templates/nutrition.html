@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% block title %}Питание - TrainGain{% endblock %}
+
+{% block content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/nutrition.css') }}">
+{% endblock %}
+
+<section class="nutrition-page">
+    <div class="nutrition-layout">
+
+        <div class="nutrition-form-column">
+            <div class="nutrition-form-card">
+                <h2>Подбор питания</h2>
+                <p class="nutrition-subtitle">
+                    Заполните анкету, и сайт рассчитает примерную норму калорий, БЖУ и предложит варианты питания под вашу цель.
+                </p>
+
+                <form method="POST" class="nutrition-form">
+                    <label for="gender">Пол</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Выберите пол</option>
+                        <option value="male" {% if form_data.get('gender') == 'male' %}selected{% endif %}>Мужской</option>
+                        <option value="female" {% if form_data.get('gender') == 'female' %}selected{% endif %}>Женский</option>
+                    </select>
+
+                    <label for="weight">Вес (кг)</label>
+                    <input id="weight" type="number" step="0.1" min="1" name="weight"
+                           value="{{ form_data.get('weight', '') }}" required>
+
+                    <label for="height">Рост (см)</label>
+                    <input id="height" type="number" step="0.1" min="1" name="height"
+                           value="{{ form_data.get('height', '') }}" required>
+
+                    <label for="goal">Цель</label>
+                    <select id="goal" name="goal" required>
+                        <option value="">Выберите цель</option>
+                        <option value="bulk" {% if form_data.get('goal') == 'bulk' %}selected{% endif %}>Набор массы</option>
+                        <option value="cut" {% if form_data.get('goal') == 'cut' %}selected{% endif %}>Похудение</option>
+                    </select>
+
+                    <label for="activity_level">Уровень активности</label>
+                    <select id="activity_level" name="activity_level" required>
+                        <option value="">Выберите уровень активности</option>
+                        <option value="low" {% if form_data.get('activity_level') == 'low' %}selected{% endif %}>Низкий</option>
+                        <option value="medium" {% if form_data.get('activity_level') == 'medium' %}selected{% endif %}>Средний</option>
+                        <option value="high" {% if form_data.get('activity_level') == 'high' %}selected{% endif %}>Высокий</option>
+                    </select>
+
+                    <label for="trainings_per_week">Тренировок в неделю</label>
+                    <input id="trainings_per_week" type="number" min="0" max="14" name="trainings_per_week"
+                           value="{{ form_data.get('trainings_per_week', '') }}" required>
+
+                    <label for="meals_per_day">Приёмов пищи в день</label>
+                    <select id="meals_per_day" name="meals_per_day" required>
+                        <option value="">Выберите количество</option>
+                        <option value="3" {% if form_data.get('meals_per_day') == '3' %}selected{% endif %}>3</option>
+                        <option value="4" {% if form_data.get('meals_per_day') == '4' %}selected{% endif %}>4</option>
+                        <option value="5" {% if form_data.get('meals_per_day') == '5' %}selected{% endif %}>5</option>
+                    </select>
+
+                    <div class="nutrition-form-actions">
+                        <button type="submit" name="action" value="calculate" class="btn btn-primary">
+                            Рассчитать
+                        </button>
+
+                        {% if result %}
+                            <button type="submit" name="action" value="save" class="btn btn-secondary">
+                                Сохранить в профиль
+                            </button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+
+            <div class="nutrition-tips-card">
+                <h3>Общие рекомендации</h3>
+                <ul>
+                    <li>Старайтесь есть белок в каждом основном приёме пищи.</li>
+                    <li>Пейте воду равномерно в течение дня, а не только во время тренировки.</li>
+                    <li>Овощи помогают держать сытость и улучшают качество рациона.</li>
+                    <li>Если вы меняете вес или уровень активности, рацион стоит пересчитать.</li>
+                </ul>
+            </div>
+
+            {% if not has_active_subscription %}
+            <div class="page-card" style="max-width: 900px; margin: 0 auto 24px;">
+                <h3>Премиум-доступ</h3>
+                <p>Подбор питания доступен только при активной подписке.</p>
+                <p>Подписка открывает расчёт питания, сохранение плана и будущие premium-функции сайта.</p>
+                <a href="{{ url_for('main.profile') }}" class="btn btn-primary">Открыть профиль и оформить подписку</a>
+            </div>
+            {% endif %}
+
+            {% if saved_plan %}
+                <div class="nutrition-saved-card">
+                    <h3>Текущий сохранённый план</h3>
+                    <p>
+                        <strong>Цель:</strong>
+                        {% if saved_plan.goal == 'bulk' %}
+                            Набор массы
+                        {% else %}
+                            Похудение
+                        {% endif %}
+                    </p>
+                    <p><strong>Калории:</strong> {{ saved_plan.target_calories }} ккал</p>
+                    <p><strong>Б:</strong> {{ saved_plan.protein_g }} г,
+                       <strong>Ж:</strong> {{ saved_plan.fat_g }} г,
+                       <strong>У:</strong> {{ saved_plan.carbs_g }} г</p>
+                    <p><strong>Сохранён:</strong> {{ saved_plan.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="nutrition-result-card">
+            <h2>Ваш результат</h2>
+
+            {% if result %}
+                <div class="nutrition-summary-grid">
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Поддержка</span>
+                        <strong>{{ result.maintenance_calories }} ккал</strong>
+                    </div>
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Цель</span>
+                        <strong>
+                            {% if result.goal == 'bulk' %}
+                                Набор массы
+                            {% else %}
+                                Похудение
+                            {% endif %}
+                        </strong>
+                    </div>
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Калории</span>
+                        <strong>{{ result.target_calories }} ккал</strong>
+                    </div>
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Белки</span>
+                        <strong>{{ result.protein_g }} г</strong>
+                    </div>
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Жиры</span>
+                        <strong>{{ result.fat_g }} г</strong>
+                    </div>
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Углеводы</span>
+                        <strong>{{ result.carbs_g }} г</strong>
+                    </div>
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Вода</span>
+                        <strong>{{ result.water_l }} л</strong>
+                    </div>
+                    <div class="nutrition-metric-card">
+                        <span class="nutrition-metric-label">Приёмов пищи</span>
+                        <strong>{{ result.meals_per_day }}</strong>
+                    </div>
+                </div>
+
+                <div class="nutrition-explanation">
+                    {% if result.goal == 'bulk' %}
+                        <p>
+                            Для набора массы выбран умеренный профицит калорий. Основной акцент сделан на достаточном количестве белка и удобном доборе энергии в течение дня.
+                        </p>
+                    {% else %}
+                        <p>
+                            Для снижения веса выбран умеренный дефицит калорий. Белок повышен, чтобы помочь сохранить мышечную массу во время похудения.
+                        </p>
+                    {% endif %}
+                </div>
+
+                <div class="nutrition-recommendations-card">
+                    <h3>Персональные рекомендации</h3>
+                    <ul>
+                        {% for item in result.recommendations %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="nutrition-plans">
+                    <h3>Варианты питания</h3>
+
+                    {% if result.meal_plan_options %}
+                        <div class="nutrition-plan-list">
+                            {% for plan in result.meal_plan_options %}
+                                <div class="nutrition-plan-card">
+                                    <h4>{{ plan.title }}</h4>
+                                    {% if plan.description %}
+                                        <p class="nutrition-plan-description">{{ plan.description }}</p>
+                                    {% endif %}
+
+                                    <div class="nutrition-meals-detailed">
+                                        {% for meal in plan.meals %}
+                                            <div class="nutrition-meal-item">
+                                                <strong>{{ meal["name"] }}</strong>
+                                                <p><span>Что есть:</span> {{ meal["items"] }}</p>
+                                                <p><span>Порция:</span> {{ meal["portion"] }}</p>
+                                                <p><span>Как приготовить:</span> {{ meal["how_to"] }}</p>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>Для этих параметров пока нет готовых шаблонов меню. Позже мы добавим больше вариантов.</p>
+                    {% endif %}
+                </div>
+
+                <div class="nutrition-substitutions-card">
+                    <h3>Чем можно заменять продукты</h3>
+
+                    {% for category, items in result.substitutions.items() %}
+                        <div class="nutrition-substitution-group">
+                            <h4>{{ category }}</h4>
+                            <ul>
+                                {% for item in items %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="nutrition-empty-state">
+                    После заполнения анкеты здесь появятся ваши калории, БЖУ, рекомендации и варианты питания.
+                </p>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+{% endblock %}

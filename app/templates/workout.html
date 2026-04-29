@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Упражнения - TrainGain{% endblock %}
+
+{% block content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workout.css') }}">
+{% endblock %}
+
+<h2 class="section-title">{{ workout.title }}</h2>
+
+{% if exercises %}
+    {% for ex in exercises %}
+        <div class="exercise-card exercise-card-advanced">
+            <div class="exercise-main">
+                <h3>{{ ex.name }}</h3>
+                <p>{{ ex.description }}</p>
+
+                {% if ex.video_url %}
+                <video class="exercise-video" controls preload="metadata">
+                    <source src="{{ url_for('static', filename=ex.video_url) }}" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+                {% endif %}
+            </div>
+
+            <div class="exercise-side">
+                <div class="exercise-level-box">
+                    <h4>Рекомендации по повторениям</h4>
+
+                    <div class="exercise-level-item">
+                        <span class="exercise-level-label">Новички</span>
+                        <strong>{{ ex.reps_beginner or "—" }}</strong>
+                    </div>
+
+                    <div class="exercise-level-item">
+                        <span class="exercise-level-label">Любители</span>
+                        <strong>{{ ex.reps_intermediate or "—" }}</strong>
+                    </div>
+
+                    <div class="exercise-level-item">
+                        <span class="exercise-level-label">Опытные</span>
+                        <strong>{{ ex.reps_advanced or "—" }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="page-card">
+        <p>В этой тренировке пока нет упражнений.</p>
+    </div>
+{% endif %}
+{% endblock %}

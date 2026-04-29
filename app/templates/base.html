@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TrainGain{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="navbar">
+            <div class="navbar-inner">
+                <div class="brand">
+                    <a href="{% if current_user.is_authenticated %}{{ url_for('main.dashboard') }}{% else %}{{ url_for('main.welcome') }}{% endif %}">TrainGain</a>
+                </div>
+
+                <div class="user-info">
+                    {% if current_user.is_authenticated %}
+                        <span>Привет, <span class="username">{{ current_user.username }}</span></span>
+                        <div class="nav-links">
+                            <a href="{{ url_for('main.nutrition') }}" class="btn btn-light">Питание</a>
+                            <a href="{{ url_for('main.profile') }}" class="btn btn-light">Профиль</a>
+                            <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Выйти</a>
+                        </div>
+                    {% else %}
+                        <div class="nav-links">
+                            <a href="{{ url_for('auth.login') }}" class="btn btn-light">Войти</a>
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Регистрация</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-list">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+
+
+    <script>
+        const tooltip = document.getElementById("tooltip");
+        const muscleZones = document.querySelectorAll(".click-muscle, .muscle-hotspot");
+
+        muscleZones.forEach(zone => {
+            zone.addEventListener("click", () => {
+                const id = zone.dataset.id;
+                if (id) {
+                    window.location.href = "/muscle/" + id;
+                }
+            });
+
+            zone.addEventListener("mousemove", (e) => {
+                if (!tooltip) return;
+
+                tooltip.style.display = "block";
+                tooltip.textContent = zone.dataset.name || "Мышца";
+                tooltip.style.left = (e.pageX + 12) + "px";
+                tooltip.style.top = (e.pageY + 12) + "px";
+            });
+
+            zone.addEventListener("mouseleave", () => {
+                if (!tooltip) return;
+                tooltip.style.display = "none";
+            });
+        });
+    </script>
+
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="footer__column">
+                    <div class="footer__brand">TrainGain</div>
+                    <p class="footer__text">© 2026 Все права защищены</p>
+                </div>
+
+                <div class="footer__column">
+                    <a href="{{ url_for('main.terms') }}" class="footer__link">Пользовательское соглашение</a>
+                    <a href="{{ url_for('main.privacy') }}" class="footer__link">Политика конфиденциальности</a>
+                </div>
+
+                <div class="footer__column">
+                    <div class="footer__label">Почта</div>
+                    <a href="mailto:yourmail@example.com" class="footer__link">train2gain@gmail.com</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

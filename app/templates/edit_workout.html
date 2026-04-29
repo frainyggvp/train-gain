@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+<div class="auth-card">
+    <h2>Редактировать тренировку</h2>
+
+    <form method="POST">
+        <label for="title">Название</label>
+        <input id="title" name="title" value="{{ workout.title }}" placeholder="Название" required>
+
+        <label for="difficulty">Сложность</label>
+        <select id="difficulty" name="difficulty" required>
+            <option value="easy" {% if workout.difficulty == 'easy' %}selected{% endif %}>Лёгкая</option>
+            <option value="medium" {% if workout.difficulty == 'medium' %}selected{% endif %}>Средняя</option>
+            <option value="hard" {% if workout.difficulty == 'hard' %}selected{% endif %}>Тяжёлая</option>
+        </select>
+
+        <label for="location">Формат тренировки</label>
+        <select id="location" name="location" required>
+            <option value="home" {% if workout.location == 'home' %}selected{% endif %}>Дома</option>
+            <option value="gym" {% if workout.location == 'gym' %}selected{% endif %}>В зале</option>
+        </select>
+
+        <label for="preview">Ссылка на изображение</label>
+        <input id="preview" name="preview" value="{{ workout.preview or '' }}" placeholder="Ссылка на изображение">
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+
+{% endblock %}

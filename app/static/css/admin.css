@@ -1,0 +1,82 @@
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.admin-block {
+    padding: 22px;
+}
+
+.admin-block h3 {
+    color: #111111;
+    margin-bottom: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    color: #111111;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th {
+    background: #202020;
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+}
+
+td,
+th {
+    padding: 12px 14px;
+    border-bottom: 1px solid #ececec;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:nth-child(even) td {
+    background: #fafafa;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.actions-cell a {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.actions-cell form {
+    margin: 0;
+}
+
+.actions-cell button {
+    margin: 0;
+    padding: 8px 12px;
+    background: #111111;
+    color: #ffffff;
+    border-radius: 8px;
+}
+
+.admin-filter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 0 16px;
+}
+
+.admin-filter-form select,
+.admin-filter-form .btn {
+    margin-bottom: 0;
+}

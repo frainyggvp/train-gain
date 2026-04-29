@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}TrainGain - Добро пожаловать{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/welcome.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="welcome">
+    <div class="welcome__hero">
+        <div class="welcome__content">
+            <span class="welcome__badge">Фитнес-платформа для тренировок и питания</span>
+            <h1 class="welcome__title">Добро пожаловать в TrainGain</h1>
+            <p class="welcome__text">
+                TrainGain помогает удобно подбирать тренировки по группам мышц, уровню сложности и формату занятий,
+                а также получать персональные рекомендации по питанию.
+            </p>
+        </div>
+    </div>
+
+    <div class="welcome__features">
+        <div class="welcome__card">
+            <h3 class="welcome__card-title">Тренировки по мышцам</h3>
+            <p class="welcome__card-text">
+                Выбор нужной зоны тела на интерактивной схеме и быстрый переход к тренировкам на конкретную группу мышц.
+            </p>
+        </div>
+
+        <div class="welcome__card">
+            <h3 class="welcome__card-title">Фильтры и удобный подбор</h3>
+            <p class="welcome__card-text">
+                Сортировка тренировок по сложности и формату: занятия дома или в зале, лёгкий, средний и тяжёлый уровень.
+            </p>
+        </div>
+
+        <div class="welcome__card">
+            <h3 class="welcome__card-title">Питание и подписка</h3>
+            <p class="welcome__card-text">
+                Подбор питания под цель пользователя, сохранение плана в профиле и доступ к premium-возможностям по подписке.
+            </p>
+        </div>
+
+        <div class="welcome__card">
+            <h3 class="welcome__card-title">Личный кабинет</h3>
+            <p class="welcome__card-text">
+                Профиль пользователя, управление email, просмотр сохранённого плана питания и контроль активной подписки.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

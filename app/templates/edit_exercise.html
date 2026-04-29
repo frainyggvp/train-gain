@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="auth-card">
+    <h2>Редактировать упражнение</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="name">Название</label>
+        <input id="name" name="name" value="{{ exercise.name }}" placeholder="Название" required>
+
+        <label for="description">Описание</label>
+        <textarea id="description" name="description" placeholder="Описание" required>{{ exercise.description }}</textarea>
+
+        <label for="video_file">Видео упражнения (mp4)</label>
+        <input id="video_file" type="file" name="video_file" accept="video/mp4">
+
+        {% if exercise.video_url %}
+            <p style="color:#111111; margin-top: 6px;">
+                Текущее видео: {{ exercise.video_url }}
+            </p>
+            <label style="display:flex; align-items:center; gap:8px; color:#111111; margin-bottom:14px;">
+                <input type="checkbox" name="remove_video" value="1" style="width:auto; margin:0;">
+                Удалить текущее видео
+            </label>
+        {% endif %}
+
+        <label for="reps_beginner">Повторения для новичков</label>
+        <input id="reps_beginner" name="reps_beginner" value="{{ exercise.reps_beginner or '' }}" placeholder="Например: 8-10">
+
+        <label for="reps_intermediate">Повторения для любителей</label>
+        <input id="reps_intermediate" name="reps_intermediate" value="{{ exercise.reps_intermediate or '' }}" placeholder="Например: 12-15">
+
+        <label for="reps_advanced">Повторения для опытных</label>
+        <input id="reps_advanced" name="reps_advanced" value="{{ exercise.reps_advanced or '' }}" placeholder="Например: 15-20">
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+
+{% endblock %}

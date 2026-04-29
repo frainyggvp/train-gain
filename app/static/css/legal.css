@@ -1,0 +1,38 @@
+.legal {
+    padding-top: 8px;
+}
+
+.legal__container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.legal__title {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.legal__subtitle {
+    color: #ffffff;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+
+.legal__text {
+    color: #f1f1f1;
+    line-height: 1.8;
+    margin: 0 0 14px;
+}
+
+.legal__list {
+    margin: 0 0 14px 22px;
+    padding: 0;
+    color: #f1f1f1;
+}
+
+.legal__list li {
+    margin-bottom: 10px;
+    line-height: 1.7;
+}
