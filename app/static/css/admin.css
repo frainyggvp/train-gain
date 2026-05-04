@@ -1,15 +1,20 @@
-.admin-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
+.admin {
+    display: flex;
     gap: 24px;
-    align-items: start;
+    align-items: flex-start;
 }
 
-.admin-block {
+.admin__block {
+    flex: 1 1 0;
+    min-width: 0;
     padding: 22px;
 }
 
-.admin-block h3 {
+.admin__block:nth-child(2) {
+    flex-grow: 1.5;
+}
+
+.admin__block h3 {
     color: #111111;
     margin-bottom: 14px;
 }
@@ -44,23 +49,23 @@ tr:nth-child(even) td {
     background: #fafafa;
 }
 
-.actions-cell {
+.admin__actions {
     display: flex;
     gap: 8px;
     align-items: center;
     flex-wrap: wrap;
 }
 
-.actions-cell a {
+.admin__actions a {
     color: var(--accent);
     font-weight: 700;
 }
 
-.actions-cell form {
+.admin__actions form {
     margin: 0;
 }
 
-.actions-cell button {
+.admin__actions button {
     margin: 0;
     padding: 8px 12px;
     background: #111111;
@@ -68,7 +73,7 @@ tr:nth-child(even) td {
     border-radius: 8px;
 }
 
-.admin-filter-form {
+.admin__filter {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
@@ -76,7 +81,65 @@ tr:nth-child(even) td {
     margin: 0 0 16px;
 }
 
-.admin-filter-form select,
-.admin-filter-form .btn {
+.admin__filter select,
+.admin__filter .button {
     margin-bottom: 0;
+}
+
+/* ADAPTIVE */
+@media (max-width: 1440px) {
+    /* Десктопный вид сохраняется без изменений. */
+}
+
+@media (max-width: 1024px) {
+    .admin {
+        flex-direction: column;
+    }
+
+    .admin__block,
+    .admin__block:nth-child(2) {
+        width: 100%;
+        flex: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin__filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin__filter a,
+    .admin__filter button,
+    .admin__filter .button {
+        width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        border-radius: 12px;
+    }
+
+    td,
+    th {
+        padding: 10px 12px;
+    }
+
+    .admin__actions {
+        flex-wrap: nowrap;
+    }
+}
+
+@media (max-width: 320px) {
+    .admin__block {
+        padding: 14px;
+    }
+
+    td,
+    th {
+        padding: 9px 10px;
+        font-size: 13px;
+    }
 }

@@ -1,8 +1,12 @@
-.hero-map-refined {
+.body-map--refined {
     padding-top: 8px;
 }
 
-.hero-map-subtitle {
+.body-map__header{
+    margin-bottom: 30px;
+}
+
+.body-map__subtitle {
     max-width: 760px;
     margin: -8px auto 0;
     color: var(--muted);
@@ -10,15 +14,16 @@
     text-align: center;
 }
 
-.photo-map-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(340px, 440px));
+.body-map__grid {
+    display: flex;
+    justify-content: space-around;
     gap: 28px;
-    justify-content: center;
-    align-items: start;
+    flex-wrap: wrap;
+    max-width: 1024px;
 }
 
-.photo-map-card {
+.body-map__card {
+    max-width: 440px;
     background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
     border-radius: 24px;
     box-shadow: var(--shadow);
@@ -26,7 +31,7 @@
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.photo-map-title {
+.body-map__card-title {
     text-align: center;
     color: #111111;
     font-size: 24px;
@@ -34,20 +39,20 @@
     margin-bottom: 12px;
 }
 
-.body-photo-map {
+.body-map__photo {
     position: relative;
     width: 100%;
     max-width: 345px;
     margin: 0 auto;
 }
 
-.body-photo-map img {
+.body-map__photo img {
     width: 100%;
     display: block;
     border-radius: 18px;
 }
 
-.body-overlay {
+.body-map__overlay {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -55,7 +60,7 @@
     overflow: visible;
 }
 
-.body-overlay .click-muscle {
+.body-map__overlay .body-map__muscle {
     fill: rgba(214, 40, 40, 0.22);
     stroke: rgba(170, 20, 20, 0.86);
     stroke-width: 6;
@@ -63,10 +68,71 @@
     transition: fill 0.18s ease;
 }
 
-.body-overlay .click-muscle:hover {
+.body-map__overlay .body-map__muscle:hover {
     fill: rgba(214, 40, 40, 0.4);
 }
 
-.body-overlay .muscle-soft {
+.body-map__overlay .body-map__muscle--soft {
     fill: rgba(214, 40, 40, 0.15);
+}
+
+/* ADAPTIVE */
+@media (max-width: 1440px) {
+    /* Десктопный вид сохраняется без изменений. */
+}
+
+@media (max-width: 1024px) {
+    .body-map__grid {
+        gap: 24px;
+    }
+
+    .body-map__card {
+        max-width: 400px;
+    }
+
+    .body-map__photo {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    .body-map__subtitle {
+        margin-top: -4px;
+        font-size: 15px;
+    }
+
+    .body-map__grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+    }
+
+    .body-map__card {
+        max-width: 390px;
+        padding: 14px;
+        border-radius: 18px;
+    }
+
+    .body-map__card-title {
+        font-size: 21px;
+    }
+
+    .body-map__photo {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 320px) {
+    .body-map__card {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    .body-map__photo {
+        max-width: 260px;
+    }
+
+    .body-map__subtitle {
+        font-size: 14px;
+    }
 }

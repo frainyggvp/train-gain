@@ -1,22 +1,24 @@
-.nutrition-page {
+.nutrition {
     padding-top: 8px;
 }
 
-.nutrition-layout {
-    display: grid;
-    grid-template-columns: minmax(320px, 420px) minmax(360px, 1fr);
+.nutrition__layout {
+    display: flex;
     gap: 24px;
-    align-items: start;
+    align-items: flex-start;
 }
 
-.nutrition-form-column {
+.nutrition__form-column {
+    flex: 0 1 420px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.nutrition-form-card,
-.nutrition-result-card {
+.nutrition__form-card,
+.nutrition__result-card {
+    flex: 1 1 360px;
+    min-width: 0;
     background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
     color: #111111;
     border-radius: 24px;
@@ -25,113 +27,117 @@
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.nutrition-form-card h2,
-.nutrition-result-card h2,
-.nutrition-plans h3,
-.nutrition-plan-card h4 {
+.page-card h3,
+.nutrition__form-card h2,
+.nutrition__result-card h2,
+.nutrition__plans h3,
+.nutrition__plan-card h4 {
     color: #111111;
 }
 
-.nutrition-subtitle {
+.nutrition__subtitle {
     color: #666666;
     line-height: 1.6;
     margin-bottom: 20px;
 }
 
-.nutrition-form {
+.nutrition__form {
     display: flex;
     flex-direction: column;
 }
 
-.nutrition-form-actions {
+.nutrition__form-actions {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
     margin-top: 8px;
 }
 
-.nutrition-summary-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(120px, 1fr));
+.nutrition__summary {
+    display: flex;
+    flex-wrap: wrap;
     gap: 14px;
     margin-bottom: 20px;
 }
 
-.nutrition-metric-card {
+.nutrition__metric {
+    flex: 1 1 calc((100% - 14px) / 2);
     background: #f4f4f4;
     border-radius: 16px;
     padding: 16px;
     border: 1px solid #e6e6e6;
 }
 
-.nutrition-metric-label {
+.nutrition__metric-label {
     display: block;
     font-size: 13px;
     color: #666666;
     margin-bottom: 6px;
 }
 
-.nutrition-explanation {
+.nutrition__explanation {
     margin-bottom: 24px;
     line-height: 1.7;
 }
 
-.nutrition-plan-list {
-    display: grid;
+.nutrition__plan-list {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
 }
 
-.nutrition-plan-card {
+.nutrition__plan-card {
     background: #f7f7f7;
     border-radius: 18px;
     padding: 18px;
     border: 1px solid #eaeaea;
 }
 
-.nutrition-plan-description {
+.nutrition__plan-description {
     color: #555555;
     margin-bottom: 14px;
     line-height: 1.6;
 }
 
-.nutrition-meals-detailed {
-    display: grid;
+.nutrition__meals {
+    display: flex;
+    flex-direction: column;
     gap: 14px;
 }
 
-.nutrition-meal-item {
+.nutrition__meal {
     background: #ffffff;
     border: 1px solid #ececec;
     border-radius: 14px;
     padding: 14px;
 }
 
-.nutrition-meal-item strong {
+.nutrition__meal strong {
     display: block;
     margin-bottom: 8px;
     color: #111111;
 }
 
-.nutrition-meal-item p {
+.nutrition__meal p {
     margin: 6px 0;
     line-height: 1.5;
     color: #333333;
 }
 
-.nutrition-meal-item span {
+.nutrition__meal span {
     font-weight: 600;
     color: #111111;
 }
 
-.nutrition-empty-state {
+.nutrition__empty {
     color: #666666;
     line-height: 1.6;
 }
 
-.nutrition-tips-card,
-.nutrition-recommendations-card,
-.nutrition-substitutions-card,
-.nutrition-saved-card {
+.nutrition__tips,
+.nutrition__recommendations,
+.nutrition__substitutions,
+.nutrition__saved {
     background: #f7f7f7;
     border-radius: 18px;
     padding: 18px;
@@ -140,38 +146,106 @@
     color: #111111;
 }
 
-.nutrition-tips-card h3,
-.nutrition-recommendations-card h3,
-.nutrition-substitutions-card h3,
-.nutrition-saved-card h3,
-.nutrition-substitution-group h4 {
+.nutrition__tips h3,
+.nutrition__recommendations h3,
+.nutrition__substitutions h3,
+.nutrition__saved h3,
+.nutrition__substitution-group h4 {
     color: #111111;
 }
 
-.nutrition-tips-card ul,
-.nutrition-recommendations-card ul,
-.nutrition-substitutions-card ul {
+.nutrition__tips ul,
+.nutrition__recommendations ul,
+.nutrition__substitutions ul {
     margin: 0;
     padding-left: 18px;
 }
 
-.nutrition-tips-card p,
-.nutrition-tips-card li,
-.nutrition-recommendations-card p,
-.nutrition-recommendations-card li,
-.nutrition-substitutions-card p,
-.nutrition-substitutions-card li,
-.nutrition-saved-card p {
+.nutrition__tips p,
+.nutrition__tips li,
+.nutrition__recommendations p,
+.nutrition__recommendations li,
+.nutrition__substitutions p,
+.nutrition__substitutions li,
+.nutrition__saved p {
     color: #111111;
 }
 
-.nutrition-tips-card li,
-.nutrition-recommendations-card li,
-.nutrition-substitutions-card li {
+.nutrition__tips li,
+.nutrition__recommendations li,
+.nutrition__substitutions li {
     margin-bottom: 10px;
     line-height: 1.5;
 }
 
-.nutrition-saved-card p {
+.nutrition__saved p {
     margin: 8px 0;
+}
+
+/* ADAPTIVE */
+@media (max-width: 1440px) {
+    /* Десктопный вид сохраняется без изменений. */
+}
+
+@media (max-width: 1024px) {
+    .nutrition__layout {
+        flex-direction: column;
+    }
+
+    .nutrition__form-column,
+    .nutrition__result-card {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        flex: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .nutrition__form-card,
+    .nutrition__result-card,
+    .nutrition__tips,
+    .nutrition__recommendations,
+    .nutrition__substitutions,
+    .nutrition__saved,
+    .nutrition__plan-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .nutrition__form-actions {
+        flex-direction: column;
+    }
+
+    .nutrition__form-actions .button {
+        width: 100%;
+    }
+
+    .nutrition__metric {
+        flex-basis: 100%;
+        padding: 14px;
+    }
+
+    .nutrition__meal {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .nutrition__form-card,
+    .nutrition__result-card,
+    .nutrition__tips,
+    .nutrition__recommendations,
+    .nutrition__substitutions,
+    .nutrition__saved,
+    .nutrition__plan-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .nutrition__subtitle,
+    .nutrition__explanation,
+    .nutrition__plan-description {
+        font-size: 14px;
+    }
 }

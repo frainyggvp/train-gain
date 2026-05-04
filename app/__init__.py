@@ -1,8 +1,13 @@
 import os
 from pathlib import Path
+from flasgger import Swagger
 from flask import Flask, render_template
-from .extensions import db, login_manager, limiter
+from .extensions import db, login_manager, limiter, migrate
 from .admin import admin_bp
+from .models import User
+from .routes import main
+from .auth import auth
+from .api import api
 
 
 def load_env_file():
@@ -43,12 +48,23 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     limiter.init_app(app)
+    migrate.init_app(app, db)
 
     login_manager.login_view = "auth.login"
     login_manager.login_message = "Пожалуйста, войдите, чтобы продолжить"
     login_manager.login_message_category = "info"
 
-    from .models import User
+    swagger_template = {
+        "swagger": "2.0",
+        "info": {
+            "title": "TrainGain API",
+            "description": "Документация API сайта для тренировок TrainGain",
+            "version": "1.0.0",
+        },
+        "basePath": "/",
+        "schemes": ["http", "https"],
+    }
+    Swagger(app, template=swagger_template)
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -58,11 +74,9 @@ def create_app():
     def ratelimit_handler(e):
         return render_template("429.html"), 429
 
-    from .routes import main
-    from .auth import auth
-
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(api)
 
     return app

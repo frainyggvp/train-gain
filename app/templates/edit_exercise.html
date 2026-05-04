@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="auth-card">
+<div class="auth">
     <h2>Редактировать упражнение</h2>
 
     <form method="POST" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
         <label for="reps_advanced">Повторения для опытных</label>
         <input id="reps_advanced" name="reps_advanced" value="{{ exercise.reps_advanced or '' }}" placeholder="Например: 15-20">
 
-        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="submit" class="button button--primary">Сохранить</button>
     </form>
 </div>
 

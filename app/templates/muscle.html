@@ -5,11 +5,11 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/muscle.css') }}">
 {% endblock %}
 
-<h2 class="section-title">{{ muscle.name if muscle else "Тренировки" }}</h2>
+<h2 class="page-title">{{ muscle.name if muscle else "Тренировки" }}</h2>
 
-<div class="page-card muscle-filter-card">
-    <form method="GET" class="muscle-filter-form">
-        <div class="muscle-filter-field">
+<div class="page-card workout-filter">
+    <form method="GET" class="workout-filter__form">
+        <div class="workout-filter__field">
             <label for="difficulty">Сложность</label>
             <select id="difficulty" name="difficulty">
                 <option value="">Все</option>
@@ -19,7 +19,7 @@
             </select>
         </div>
 
-        <div class="muscle-filter-field">
+        <div class="workout-filter__field">
             <label for="location">Формат</label>
             <select id="location" name="location">
                 <option value="">Все</option>
@@ -28,22 +28,22 @@
             </select>
         </div>
 
-        <div class="muscle-filter-actions">
-            <button type="submit" class="btn btn-primary">Применить</button>
-            <a href="{{ url_for('main.muscle_page', id=muscle.id) }}" class="btn btn-secondary">Сбросить</a>
+        <div class="workout-filter__actions">
+            <button type="submit" class="button button--primary">Применить</button>
+            <a href="{{ url_for('main.muscle_page', id=muscle.id) }}" class="button button--secondary">Сбросить</a>
         </div>
     </form>
 </div>
 
-<div class="card-container">
+<div class="card-list">
     {% for workout in workouts %}
     <div class="card"
          style="background-image: url('{{ url_for('static', filename=workout.preview) if workout.preview else url_for('static', filename='default.jpg') }}');">
 
-        <div class="card-content">
+        <div class="card__content">
             <h3>{{ workout.title }}</h3>
 
-            <p class="workout-meta">
+            <p class="card__meta">
                 {% if workout.difficulty == "easy" %}
                     Лёгкая
                 {% elif workout.difficulty == "medium" %}
@@ -60,7 +60,7 @@
             </p>
 
             <a href="{{ url_for('main.workout_page', id=workout.id) }}">
-                <button class="open-btn" type="button">Открыть</button>
+                <button class="button button--secondary" type="button">Открыть</button>
             </a>
         </div>
     </div>

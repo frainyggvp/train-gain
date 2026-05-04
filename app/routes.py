@@ -69,7 +69,6 @@ def workout_page(id):
         "workout.html",
         workout=workout,
         exercises=exercises,
-        has_access=True
     )
 
 
@@ -100,7 +99,7 @@ def profile():
 
 @main.route("/profile/change_email/start", methods=["POST"])
 @login_required
-@limiter.limit("3 per 10 minutes")
+@limiter.limit("3 per 5 minutes")
 def start_email_change():
     new_email = request.form.get("new_email", "").strip().lower()
 
@@ -132,21 +131,30 @@ def start_email_change():
         is_used=False
     )
 
+    if current_user.email:
+        try:
+            send_email_message(
+                current_user.email,
+                "TrainGain | Подтверждение старой почты",
+                f"Ваш код подтверждения старой почты: {old_code}\n\nКод действует 15 минут."
+            )
+        except Exception as e:
+            flash(f"Ошибка отправки email на старую почту: {e}", "danger")
+            print(e)
+            return redirect(url_for("main.profile"))
+
+    try:
+        send_email_message(
+            new_email,
+            "TrainGain | Подтверждение новой почты",
+            f"Ваш код подтверждения новой почты: {new_code}\n\nКод действует 15 минут."
+        )
+    except Exception as e:
+        flash(f"Ошибка отправки email на новую почту: {e}", "danger")
+        return redirect(url_for("main.profile"))
+
     db.session.add(req)
     db.session.commit()
-
-    if current_user.email:
-        send_email_message(
-            current_user.email,
-            "TrainGain | Подтверждение старой почты",
-            f"Ваш код подтверждения старой почты: {old_code}\n\nКод действует 15 минут."
-        )
-
-    send_email_message(
-        new_email,
-        "TrainGain | Подтверждение новой почты",
-        f"Ваш код подтверждения новой почты: {new_code}\n\nКод действует 15 минут."
-    )
 
     flash("Коды подтверждения отправлены на почту", "success")
     return redirect(url_for("main.profile"))
@@ -154,7 +162,7 @@ def start_email_change():
 
 @main.route("/profile/change_email/confirm", methods=["POST"])
 @login_required
-@limiter.limit("5 per 10 minutes")
+@limiter.limit("3 per 5 minutes")
 def confirm_email_change():
     old_email_code = request.form.get("old_email_code", "").strip()
     new_email_code = request.form.get("new_email_code", "").strip()

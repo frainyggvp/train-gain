@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 {% endblock %}
 
-<h2 class="section-title">Админ-панель</h2>
-<div class="admin-grid">
+<h2 class="page-title">Админ-панель</h2>
+<div class="admin">
 
-    <div class="admin-block">
+    <div class="admin__block">
         <h3>Добавить тренировку</h3>
         <form method="POST" action="{{ url_for('admin.add_workout') }}">
             <input name="title" placeholder="Название тренировки" required>
@@ -33,7 +33,7 @@
 
             <input name="preview" placeholder="Ссылка на изображение">
 
-            <button type="submit" class="btn btn-primary">Добавить тренировку</button>
+            <button type="submit" class="button button--primary">Добавить тренировку</button>
         </form>
 
         
@@ -55,14 +55,14 @@
                     {% endfor %}
                 </select>
 
-                <button type="submit" name="add_exercise" class="btn btn-primary">Добавить упражнение</button>
+                <button type="submit" name="add_exercise" class="button button--primary">Добавить упражнение</button>
             </form>
     </div>
 
-    <div class="admin-block">
+    <div class="admin__block">
         <h3>Тренировки</h3>
 
-        <form method="GET" class="admin-filter-form">
+        <form method="GET" class="admin__filter">
             <select name="muscle_group_id">
                 <option value="">Все группы мышц</option>
                 {% for m in muscles %}
@@ -85,8 +85,8 @@
                 <option value="gym" {% if selected_location == "gym" %}selected{% endif %}>В зале</option>
             </select>
 
-            <button type="submit" class="btn btn-primary">Фильтровать</button>
-            <a href="{{ url_for('admin.admin_index') }}" class="btn btn-secondary">Сбросить</a>
+            <button type="submit" class="button button--primary">Фильтровать</button>
+            <a href="{{ url_for('admin.admin_index') }}" class="button button--secondary">Сбросить</a>
         </form>
 
         <table>
@@ -115,7 +115,7 @@
                     {% else %}В зале
                     {% endif %}
                 </td>
-                <td class="actions-cell">
+                <td class="admin__actions">
                     <a href="{{ url_for('admin.edit_workout', id=w.id) }}">✏️</a>
 
                     <form method="POST"
@@ -130,14 +130,14 @@
 
         <h3>Упражнения</h3>
 
-        <form method="GET" class="admin-filter-form">
+        <form method="GET" class="admin__filter">
             <select name="exercise_sort">
                 <option value="id" {% if exercise_sort == "id" %}selected{% endif %}>Сортировка по ID</option>
                 <option value="name" {% if exercise_sort == "name" %}selected{% endif %}>Сортировка по названию</option>
             </select>
 
-            <button type="submit" class="btn btn-primary">Применить</button>
-            <a href="{{ url_for('admin.admin_index') }}" class="btn btn-secondary">Сбросить</a>
+            <button type="submit" class="button button--primary">Применить</button>
+            <a href="{{ url_for('admin.admin_index') }}" class="button button--secondary">Сбросить</a>
         </form>
 
         <table>
@@ -153,7 +153,7 @@
                 <td>{{ e.id }}</td>
                 <td>{{ e.name }}</td>
                 <td>{{ e.workout.title if e.workout else "-" }}</td>
-                <td class="actions-cell">
+                <td class="admin__actions">
                     <a href="{{ url_for('admin.edit_exercise', id=e.id) }}">✏️</a>
 
                     <form method="POST"

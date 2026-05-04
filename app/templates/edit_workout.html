@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 {% endblock %}
 
-<div class="auth-card">
+<div class="auth">
     <h2>Редактировать тренировку</h2>
 
     <form method="POST">
@@ -28,7 +28,7 @@
         <label for="preview">Ссылка на изображение</label>
         <input id="preview" name="preview" value="{{ workout.preview or '' }}" placeholder="Ссылка на изображение">
 
-        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="submit" class="button button--primary">Сохранить</button>
     </form>
 </div>
 

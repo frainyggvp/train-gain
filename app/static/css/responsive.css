@@ -1,69 +1,35 @@
-@media (max-width: 992px) {
-    .card-container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+/*
+    Общий адаптивный файл.
+    Основные адаптивные правила находятся в CSS конкретных страниц,
+    чтобы не менять дизайн и не перебивать стили страниц.
+*/
 
-    .admin-grid {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 1440px) {
+    /* Десктопный вид сохраняется без изменений. */
 }
 
-@media (max-width: 900px) {
-    .photo-map-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .photo-map-card {
-        max-width: 430px;
-        margin: 0 auto;
-    }
-
-    .body-photo-map {
-        max-width: 330px;
-    }
-
-    .nutrition-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .exercise-card-advanced {
-        grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+    .layout__container {
+        padding-left: 18px;
+        padding-right: 18px;
     }
 }
 
 @media (max-width: 768px) {
-    .muscle-filter-form {
-        grid-template-columns: 1fr;
+    html,
+    body {
+        overflow-x: hidden;
     }
 
-    .admin-filter-form {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .admin-filter-form a,
-    .admin-filter-form button {
-        width: 100%;
+    .layout__container {
+        padding-left: 14px;
+        padding-right: 14px;
     }
 }
 
-@media (max-width: 700px) {
-    .profile-nutrition-summary-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 640px) {
-    .navbar-inner {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .card-container {
-        grid-template-columns: 1fr;
-    }
-
-    .container {
-        padding: 24px 14px 40px;
+@media (max-width: 320px) {
+    .layout__container {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

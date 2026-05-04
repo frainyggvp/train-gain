@@ -1,29 +1,91 @@
-.muscle-filter-card {
+.workout-filter {
     max-width: 1000px;
     margin: 0 auto 24px;
 }
 
-.muscle-filter-form {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(180px, 1fr));
+.workout-filter__form {
+    display: flex;
     gap: 16px;
-    align-items: end;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.muscle-filter-field {
+.workout-filter__field {
     display: flex;
     flex-direction: column;
 }
 
-.muscle-filter-actions {
+.workout-filter__field label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.workout-filter__field select {
+    width: 260px;
+    max-width: 100%;
+    margin-bottom: 0;
+}
+
+.workout-filter__actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
 }
 
-.workout-meta {
+.card__meta {
     color: #f1f1f1;
     font-size: 14px;
     margin: 0 0 14px;
     font-weight: 600;
+}
+
+/* ADAPTIVE */
+@media (max-width: 1440px) {
+    /* Десктопный вид сохраняется без изменений. */
+}
+
+@media (max-width: 1024px) {
+    .workout-filter {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .workout-filter {
+        padding: 0 12px;
+    }
+
+    .workout-filter__form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .workout-filter__field,
+    .workout-filter__actions {
+        width: 100%;
+    }
+
+    .workout-filter__field select {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .workout-filter__actions {
+        flex-direction: column;
+    }
+
+    .workout-filter__actions .button {
+        width: 100%;
+    }
+
+    .card__meta {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .workout-filter {
+        margin-bottom: 18px;
+    }
 }

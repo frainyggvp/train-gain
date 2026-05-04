@@ -172,9 +172,9 @@ def add_workout():
 
     if preview is None:
         if location == "gym":
-            preview = "https://atlantkazan.ru/upload/iblock/0fc/j3q05cw5fxrxi6di0cxkvgcr1aiwxt9k/198A8461.jpg"
+            preview = "static/img/gym.jpg"
         else:
-            preview = "https://static.tildacdn.com/tild3736-6430-4261-b162-316333623832/photo.png"
+            preview = "static/img/home.png"
 
     workout = Workout(
         title=title,

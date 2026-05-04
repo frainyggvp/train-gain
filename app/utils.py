@@ -10,6 +10,10 @@ def generate_verification_code(length=6):
     return "".join(random.choices("0123456789", k=length))
 
 
+def validate_email(email):
+    return re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email)
+
+
 def validate_password(password: str):
     if len(password) < 8:
         return "Пароль должен быть не короче 8 символов"

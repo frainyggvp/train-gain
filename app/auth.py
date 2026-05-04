@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import User, PendingRegistration, PasswordResetCode
 from .extensions import db, limiter
-from .utils import send_email_message, generate_verification_code, validate_password
+from .utils import send_email_message, generate_verification_code, validate_password, validate_email
 
 auth = Blueprint("auth", __name__)
 
@@ -48,6 +48,10 @@ def register():
             flash("Логин, email и пароль обязательны", "danger")
             return redirect(url_for("auth.register"))
 
+        if not validate_email(email):
+            flash("Введите корректный email", "danger")
+            return redirect(url_for("auth.register"))
+
         if password != password_confirm:
             flash("Пароли не совпадают", "danger")
             return redirect(url_for("auth.register"))
@@ -83,11 +87,19 @@ def register():
         db.session.add(pending)
         db.session.commit()
 
-        send_email_message(
-            email,
-            "TrainGain | Подтверждение регистрации",
-            f"Ваш код подтверждения: {code}\n\nКод действует 15 минут."
-        )
+        try:
+            send_email_message(
+                email,
+                "TrainGain | Подтверждение регистрации",
+                f"Ваш код подтверждения: {code}\n\nКод действует 15 минут."
+            )
+
+            db.session.add(pending)
+            db.session.commit()
+
+        except Exception as e:
+            flash(f"Ошибка отправки кода: {e}", "danger")
+            return redirect(url_for("auth.register"))
 
         session["pending_registration_id"] = pending.id
 
@@ -98,7 +110,7 @@ def register():
 
 
 @auth.route("/verify_registration", methods=["GET", "POST"])
-@limiter.limit("5 per 10 minutes", methods=["POST"])
+@limiter.limit("5 per 5 minutes", methods=["POST"])
 def verify_registration():
     pending_id = session.get("pending_registration_id")
     if not pending_id:
@@ -165,13 +177,17 @@ def logout():
 
 
 @auth.route("/reset_password", methods=["GET", "POST"])
-@limiter.limit("3 per 10 minutes", methods=["POST"])
+@limiter.limit("3 per 5 minutes", methods=["POST"])
 def reset_password():
     if request.method == "POST":
         email = request.form.get("email", "").strip().lower()
 
         if not email:
             flash("Введите email", "danger")
+            return redirect(url_for("auth.reset_password"))
+
+        if not validate_email(email):
+            flash("Введите корректный email", "danger")
             return redirect(url_for("auth.reset_password"))
 
         user = User.query.filter_by(email=email).first()
@@ -190,14 +206,19 @@ def reset_password():
             is_used=False
         )
 
-        db.session.add(reset_request)
-        db.session.commit()
+        try:
+            send_email_message(
+                email,
+                "TrainGain | Восстановление пароля",
+                f"Ваш код для восстановления пароля: {code}\n\nКод действует 15 минут."
+            )
 
-        send_email_message(
-            email,
-            "TrainGain | Восстановление пароля",
-            f"Ваш код для восстановления пароля: {code}\n\nКод действует 15 минут."
-        )
+            db.session.add(reset_request)
+            db.session.commit()
+
+        except Exception as e:
+            flash(f"Ошибка отправки кода: {e}", "danger")
+            return redirect(url_for("auth.reset_password"))
 
         flash("Код для восстановления пароля отправлен на email", "success")
         return redirect(url_for("auth.reset_password_confirm", email=email))

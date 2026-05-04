@@ -7,19 +7,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 {% endblock %}
 
-<section class="profile-page">
+<section class="profile">
 
-    <div class="page-card profile-card">
-    <h2 class="section-title">Профиль</h2>
-    <p class="profile-subtitle">
+    <div class="page-card profile__card">
+    <h2 class="page-title">Профиль</h2>
+    <p class="profile__subtitle">
         Здесь вы можете изменить email, посмотреть сохранённый план питания и свою подписку.
     </p>
 
-    <div class="profile-email-section">
+    <div class="profile__email">
         <p><strong>Текущий email:</strong> {{ current_user.email or "Не указан" }}</p>
 
         <h3>Смена email</h3>
-        <form method="POST" action="{{ url_for('main.start_email_change') }}" class="profile-form">
+        <form method="POST" action="{{ url_for('main.start_email_change') }}" class="profile__form">
             <label for="new_email">Новый email</label>
             <input
                 id="new_email"
@@ -29,19 +29,19 @@
                 required
             >
 
-            <div class="profile-actions">
-                <button type="submit" class="btn btn-primary">Отправить коды подтверждения</button>
+            <div class="profile__actions">
+                <button type="submit" class="button button--primary">Отправить коды подтверждения</button>
             </div>
         </form>
 
         {% if email_change_request %}
-            <div class="profile-email-confirm-card">
+            <div class="profile__email-confirm">
                 <h3>Подтверждение смены email</h3>
-                <p class="muted-text">
+                <p class="text text--muted">
                     Новый email: {{ email_change_request.new_email }}
                 </p>
 
-                <form method="POST" action="{{ url_for('main.confirm_email_change') }}" class="profile-form">
+                <form method="POST" action="{{ url_for('main.confirm_email_change') }}" class="profile__form">
                     {% if email_change_request.old_email %}
                         <label for="old_email_code">Код со старой почты</label>
                         <input
@@ -62,8 +62,8 @@
                         required
                     >
 
-                    <div class="profile-actions">
-                        <button type="submit" class="btn btn-primary">Подтвердить смену email</button>
+                    <div class="profile__actions">
+                        <button type="submit" class="button button--primary">Подтвердить смену email</button>
                     </div>
                 </form>
             </div>
@@ -71,7 +71,7 @@
     </div>
 </div>
 
-    <div class="profile-subscription-card">
+    <div class="profile__subscription">
     <h3>Подписка</h3>
 
         {% if subscription %}
@@ -80,7 +80,7 @@
             <p><strong>Действует до:</strong> {{ subscription.expires_at.strftime('%d.%m.%Y %H:%M') }}</p>
 
             <form method="POST" action="{{ url_for('main.activate_subscription') }}">
-                <button type="submit" class="btn btn-primary">Продлить на 30 дней</button>
+                <button type="submit" class="button button--primary">Продлить на 30 дней</button>
             </form>
         {% else %}
             <p><strong>Статус:</strong> Не активна</p>
@@ -91,18 +91,18 @@
             </ul>
 
             <form method="POST" action="{{ url_for('main.activate_subscription') }}">
-                <button type="submit" class="btn btn-primary">Оформить подписку на 30 дней</button>
+                <button type="submit" class="button button--primary">Оформить подписку на 30 дней</button>
             </form>
         {% endif %}
     </div>
 
-    <div class="profile-nutrition-card">
+    <div class="profile__nutrition">
         <h3>Мой план питания</h3>
 
         {% if nutrition_plan %}
-            <div class="profile-nutrition-summary-grid">
-                <div class="profile-nutrition-metric-card">
-                    <span class="profile-nutrition-metric-label">Цель</span>
+            <div class="profile__nutrition-summary">
+                <div class="profile__nutrition-metric">
+                    <span class="profile__nutrition-metric-label">Цель</span>
                     <strong>
                         {% if nutrition_plan.goal == 'bulk' %}
                             Набор массы
@@ -112,33 +112,33 @@
                     </strong>
                 </div>
 
-                <div class="profile-nutrition-metric-card">
-                    <span class="profile-nutrition-metric-label">Калории</span>
+                <div class="profile__nutrition-metric">
+                    <span class="profile__nutrition-metric-label">Калории</span>
                     <strong>{{ nutrition_plan.target_calories }} ккал</strong>
                 </div>
 
-                <div class="profile-nutrition-metric-card">
-                    <span class="profile-nutrition-metric-label">Белки</span>
+                <div class="profile__nutrition-metric">
+                    <span class="profile__nutrition-metric-label">Белки</span>
                     <strong>{{ nutrition_plan.protein_g }} г</strong>
                 </div>
 
-                <div class="profile-nutrition-metric-card">
-                    <span class="profile-nutrition-metric-label">Жиры</span>
+                <div class="profile__nutrition-metric">
+                    <span class="profile__nutrition-metric-label">Жиры</span>
                     <strong>{{ nutrition_plan.fat_g }} г</strong>
                 </div>
 
-                <div class="profile-nutrition-metric-card">
-                    <span class="profile-nutrition-metric-label">Углеводы</span>
+                <div class="profile__nutrition-metric">
+                    <span class="profile__nutrition-metric-label">Углеводы</span>
                     <strong>{{ nutrition_plan.carbs_g }} г</strong>
                 </div>
 
-                <div class="profile-nutrition-metric-card">
-                    <span class="profile-nutrition-metric-label">Вода</span>
+                <div class="profile__nutrition-metric">
+                    <span class="profile__nutrition-metric-label">Вода</span>
                     <strong>{{ nutrition_plan.water_l }} л</strong>
                 </div>
             </div>
 
-            <div class="profile-nutrition-section">
+            <div class="profile__nutrition-section">
                 <h4>Рекомендации</h4>
                 <ul>
                     {% for item in nutrition_plan.recommendations %}
@@ -147,22 +147,22 @@
                 </ul>
             </div>
 
-            <div class="profile-nutrition-section">
+            <div class="profile__nutrition-section">
                 <h4>Сохранённые варианты питания</h4>
 
                 {% if nutrition_plan.meal_plan_options %}
-                    <div class="profile-nutrition-plan-list">
+                    <div class="profile__nutrition-plan-list">
                         {% for plan in nutrition_plan.meal_plan_options %}
-                            <div class="profile-nutrition-plan-card">
+                            <div class="profile__nutrition-plan">
                                 <h5>{{ plan.title }}</h5>
 
                                 {% if plan.description %}
-                                    <p class="profile-nutrition-plan-description">{{ plan.description }}</p>
+                                    <p class="profile__nutrition-plan-description">{{ plan.description }}</p>
                                 {% endif %}
 
-                                <div class="profile-nutrition-meals-detailed">
+                                <div class="profile__nutrition-meals">
                                     {% for meal in plan.meals %}
-                                        <div class="profile-nutrition-meal-item">
+                                        <div class="profile__nutrition-meal">
                                             <strong>{{ meal["name"] }}</strong>
                                             <p><span>Что есть:</span> {{ meal["items"] }}</p>
                                             <p><span>Порция:</span> {{ meal["portion"] }}</p>
@@ -178,11 +178,11 @@
                 {% endif %}
             </div>
 
-            <div class="profile-nutrition-section">
+            <div class="profile__nutrition-section">
                 <h4>Замены продуктов</h4>
 
                 {% for category, items in nutrition_plan.substitutions.items() %}
-                    <div class="profile-nutrition-substitution-group">
+                    <div class="profile__nutrition-substitution-group">
                         <h5>{{ category }}</h5>
                         <ul>
                             {% for item in items %}
@@ -193,12 +193,12 @@
                 {% endfor %}
             </div>
 
-            <div class="profile-nutrition-actions">
-                <a href="{{ url_for('main.nutrition') }}" class="btn btn-primary">Открыть раздел питания</a>
+            <div class="profile__nutrition-actions">
+                <a href="{{ url_for('main.nutrition') }}" class="button button--primary">Открыть раздел питания</a>
             </div>
         {% else %}
-            <p class="profile-nutrition-empty">У вас пока нет сохранённого плана питания.</p>
-            <a href="{{ url_for('main.nutrition') }}" class="btn btn-primary">Подобрать питание</a>
+            <p class="profile__nutrition-empty">У вас пока нет сохранённого плана питания.</p>
+            <a href="{{ url_for('main.nutrition') }}" class="button button--primary">Подобрать питание</a>
         {% endif %}
     </div>
 

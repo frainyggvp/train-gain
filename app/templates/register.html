@@ -11,15 +11,15 @@
         <input name="password" type="password" placeholder="Пароль" required>
         <input name="password_confirm" type="password" placeholder="Повторите пароль" required>
 
-        <p class="muted-text">
+        <p class="text text--muted">
             Пароль должен быть не короче 8 символов, содержать только латинские буквы и цифры,
             а также включать хотя бы одну букву и одну цифру.
         </p>
 
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        <button type="submit" class="button button--primary">Зарегистрироваться</button>
     </form>
 
-    <div class="auth-links">
+    <div class="auth__links">
         <a href="{{ url_for('auth.login') }}">Уже есть аккаунт? Войти</a>
     </div>
 </div>

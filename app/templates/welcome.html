@@ -9,43 +9,94 @@
 <section class="welcome">
     <div class="welcome__hero">
         <div class="welcome__content">
-            <span class="welcome__badge">Фитнес-платформа для тренировок и питания</span>
-            <h1 class="welcome__title">Добро пожаловать в TrainGain</h1>
+            <span class="welcome__badge">Веб-сайт для спортивных тренировок.</span>
+            <h1 class="welcome__title">Твой путь к сильному телу начинается <span class="welcome__title--accent">здесь.</span></h1>
             <p class="welcome__text">
-                TrainGain помогает удобно подбирать тренировки по группам мышц, уровню сложности и формату занятий,
+                TrainGain помогает подбирать тренировки на выбранные группы мышц, уровень сложности упражнений и формат занятий,
                 а также получать персональные рекомендации по питанию.
             </p>
         </div>
     </div>
 
-    <div class="welcome__features">
-        <div class="welcome__card">
-            <h3 class="welcome__card-title">Тренировки по мышцам</h3>
-            <p class="welcome__card-text">
-                Выбор нужной зоны тела на интерактивной схеме и быстрый переход к тренировкам на конкретную группу мышц.
+    <div class="welcome-slider">
+        <div class="welcome-slider__slide welcome-slider__slide--active">
+            <img class="welcome-slider__image"
+                 src="{{ url_for('static', filename='img/Body.jpg') }}"
+                 alt="Выбор тренировок по мышцам">
+    
+            <h3 class="welcome-slider__title">Выбор группы мышц</h3>
+            <p class="welcome-slider__text">
+                Выбирай нужную зону тела на интерактивной схеме и быстро переходи к тренировкам
+                для выбранной группы мышц.
             </p>
         </div>
-
-        <div class="welcome__card">
-            <h3 class="welcome__card-title">Фильтры и удобный подбор</h3>
-            <p class="welcome__card-text">
-                Сортировка тренировок по сложности и формату: занятия дома или в зале, лёгкий, средний и тяжёлый уровень.
+    
+        <div class="welcome-slider__slide">
+            <img class="welcome-slider__image"
+                 src="{{ url_for('static', filename='img/Trainings.jpg') }}"
+                 alt="Фильтры тренировок">
+    
+            <h3 class="welcome-slider__title">Тренировки, подходящие уровню</h3>
+            <p class="welcome-slider__text">
+                Фильтруй тренировки по сложности и формату занятий: дома или в тренажёрном зале.
             </p>
         </div>
-
-        <div class="welcome__card">
-            <h3 class="welcome__card-title">Питание и подписка</h3>
-            <p class="welcome__card-text">
-                Подбор питания под цель пользователя, сохранение плана в профиле и доступ к premium-возможностям по подписке.
+    
+        <div class="welcome-slider__slide">
+            <img class="welcome-slider__image"
+                 src="{{ url_for('static', filename='img/Food.jpg') }}"
+                 alt="Подбор питания">
+    
+            <h3 class="welcome-slider__title">Питание под конкретную цель</h3>
+            <p class="welcome-slider__text">
+                Рассчитывай калории, БЖУ и получай варианты питания для набора массы тела или снижения веса.
             </p>
         </div>
-
-        <div class="welcome__card">
-            <h3 class="welcome__card-title">Личный кабинет</h3>
-            <p class="welcome__card-text">
-                Профиль пользователя, управление email, просмотр сохранённого плана питания и контроль активной подписки.
+    
+        <div class="welcome-slider__slide">
+            <img class="welcome-slider__image"
+                 src="{{ url_for('static', filename='img/Profile.png') }}"
+                 alt="Личный кабинет">
+    
+            <h3 class="welcome-slider__title">Личный кабинет</h3>
+            <p class="welcome-slider__text">
+                Сохраняй план питания, управляй подпиской и настройками аккаунта в одном месте.
             </p>
+        </div>
+    
+        <div class="welcome-slider__controls">
+            <button class="welcome-slider__button welcome-slider__button--prev" type="button">‹</button>
+            <button class="welcome-slider__button welcome-slider__button--next" type="button">›</button>
         </div>
     </div>
 </section>
+<script>
+    const slides = document.querySelectorAll(".welcome-slider__slide");
+    const prevButton = document.querySelector(".welcome-slider__button--prev");
+    const nextButton = document.querySelector(".welcome-slider__button--next");
+
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides[currentSlide].classList.remove("welcome-slider__slide--active");
+
+        if (index < 0) {
+            currentSlide = slides.length - 1;
+        } else if (index >= slides.length) {
+            currentSlide = 0;
+        } else {
+            currentSlide = index;
+        }
+
+        slides[currentSlide].classList.add("welcome-slider__slide--active");
+    }
+
+    prevButton.addEventListener("click", function () {
+        showSlide(currentSlide - 1);
+    });
+
+    nextButton.addEventListener("click", function () {
+        showSlide(currentSlide + 1);
+    });
+</script>
 {% endblock %}

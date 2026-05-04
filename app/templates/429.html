@@ -2,11 +2,11 @@
 {% block title %}Слишком много запросов - TrainGain{% endblock %}
 
 {% block content %}
-<div class="auth-card">
+<div class="auth">
     <h2>Слишком много попыток</h2>
-    <p class="muted-text">
+    <p class="text text--muted">
         Вы слишком часто выполняете это действие. Подождите немного и попробуйте снова.
     </p>
-    <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Вернуться</a>
+    <a href="{{ url_for('auth.login') }}" class="button button--primary">Вернуться</a>
 </div>
 {% endblock %}

@@ -2,15 +2,15 @@
 {% block title %}Подтверждение регистрации - TrainGain{% endblock %}
 
 {% block content %}
-<div class="auth-card">
+<div class="auth">
     <h2>Подтверждение регистрации</h2>
-    <p class="muted-text">
+    <p class="text text--muted">
         Мы отправили код на {{ pending_email }}.
     </p>
 
     <form method="POST">
         <input name="code" placeholder="Введите код из письма" required>
-        <button type="submit" class="btn btn-primary">Подтвердить</button>
+        <button type="submit" class="button button--primary">Подтвердить</button>
     </form>
 </div>
 {% endblock %}
